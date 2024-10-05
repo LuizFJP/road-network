@@ -1,2 +1,4 @@
-package command;public class MoveCommand {
+package command;
+
+public class MoveCommand {
 }

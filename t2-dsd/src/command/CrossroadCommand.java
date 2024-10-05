@@ -1,2 +1,5 @@
-package command;public class CrossingCommand {
+package command;
+
+public class CrossroadCommand {
+
 }

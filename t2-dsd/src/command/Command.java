@@ -1,2 +1,4 @@
-package command;public class Command {
+package command;
+
+public abstract class Command {
 }
