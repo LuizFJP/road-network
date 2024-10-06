@@ -1,5 +1,6 @@
 import models.Block;
 import models.Car;
+import models.CreateMesh;
 
 import java.util.Random;
 
@@ -8,10 +9,13 @@ public class Spawner implements Runnable {
     private int limit;
     private Car[] cars;
 
-    public Spawner(Block[] blocks, int limit) {
+    private CreateMesh mesh;
+
+    public Spawner(Block[] blocks, int limit, CreateMesh mesh) {
         this.blocks = blocks;
         this.limit = limit;
         this.cars = new Car[limit];
+        this.mesh = mesh;
     }
 
     @Override
@@ -25,7 +29,7 @@ public class Spawner implements Runnable {
                 var block = blocks[counter];
                 var speed = Math.random();
                 var position = getPosition();
-                var car = new Car("", speed, block.getLine(), block.getColumn(), cars, position);
+                var car = new Car("", speed, block.getLine(), block.getColumn(), cars, position, mesh);
                 cars[position] = car; // ver o problema se ao spawnar vai entrar em um block ocupado
                 block.occupyCar(car);
             }

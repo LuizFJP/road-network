@@ -22,6 +22,10 @@ public abstract class Block {
         this.car = car;
     }
 
+    public void releaseCar(){
+        this.car = null;
+    }
+
     public abstract void releaseBlock();
     public abstract void lockBlock();
 

@@ -1,3 +1,5 @@
+package models;
+
 import factory.CreateSemaphoreBlock;
 import factory.FactoryBlock;
 import models.Block;
@@ -7,6 +9,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CreateMesh {
+    private static Block[][] mesh;
+
     public static Block[][] generateRoads(String caminhoArquivo, FactoryBlock factoryBlock) throws IOException {
         BufferedReader leitor = new BufferedReader(new FileReader(caminhoArquivo));
         String linha;
@@ -15,7 +19,7 @@ public class CreateMesh {
         var lines = Integer.parseInt(leitor.readLine().replaceAll("\\s+", ""));
         var columns = Integer.parseInt(leitor.readLine().replaceAll("\\s+", ""));
 
-        Block[][] mesh = new Block[lines][columns];
+        mesh = new Block[lines][columns];
 
         while ((linha = leitor.readLine()) != null && currentLine < lines) {
             String[] valores = linha.trim().split("\\s+");
@@ -41,5 +45,25 @@ public class CreateMesh {
         } else if (line == 0 && direction == 3) {
             return true;
         } else return line == mesh.length - 1 && direction == 1;
+    }
+
+    public static Block getRightBlock(int line, int column){
+        return mesh[line + 1][column];
+    }
+
+    public Block getLeftBlock(int line, int column){
+        return mesh[line - 1][column];
+    }
+
+    public Block getUpBlock(int line, int column){
+        return mesh[line][column - 1];
+    }
+
+    public Block getDownBlock(int line, int column){
+        return mesh[line][column + 1];
+    }
+
+    public Block[][] getMesh() {
+        return mesh;
     }
 }
