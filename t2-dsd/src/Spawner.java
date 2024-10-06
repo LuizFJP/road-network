@@ -1,3 +1,4 @@
+
 import models.Block;
 import models.Car;
 import models.CreateMesh;
@@ -46,4 +47,26 @@ public class Spawner implements Runnable {
         }
         return 0;
     }
+/*
+* cross(block) {
+*   List<Block> path;
+*   path.add(block);
+*   var cb = block;
+*   while(cb.cross) {
+*       var block = nextBlock();
+*       var aux = cb;
+*       path.add(aux);
+*       cb = block;
+*   }
+*
+*   for(int i = 0; i < path.size(); i++) {
+*       if (path.get(i).occupied()) {
+*           i = 0;
+*           timeout;
+*        }
+*       path.get(i).occupyBlock(car);
+*   }
+*
+* */
+
 }

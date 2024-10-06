@@ -4,7 +4,6 @@ import models.Car;
 import models.CreateMesh;
 
 public abstract class Command {
-
     private Block block;
     private Block nextBlock;
     private Car car;
@@ -103,5 +102,9 @@ public abstract class Command {
     public void setBlock(Block block) {
         this.block = block;
     }
+
+public void bla() {
+
+}
 
 }
