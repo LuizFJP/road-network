@@ -3,18 +3,18 @@ package models;
 import command.Command;
 import command.MoveCommand;
 
-public class Car {
+public class Car extends Thread {
     String image;
     double speed;
     Block block;
     int line;
     int column;
     int position;
-    CreateMesh mesh;
+    Block[][] mesh;
     boolean stop;
     Car[] cars;
 
-    public Car(String image, double speed, int line, int column, Car[] cars, int position, CreateMesh mesh) {
+    public Car(String image, double speed, int line, int column, Car[] cars, int position, Block[][] mesh) {
         this.image = image;
         this.speed = speed;
         this.line = line;
@@ -25,18 +25,29 @@ public class Car {
     }
 
     public synchronized void autoKill() {
+        this.block.releaseCar();
+        this.block.releaseBlock();
         cars[position] = null;
     }
 
-    public void go(){
-        Command command = new MoveCommand(this.block, this.mesh);
+    @Override
+    public void run() {
         stop = false;
         while(!stop){
-            command.execute();
-            command.setBlock(this.block);
+            go();
+            if (block.isExit()) {
+                stop = true;
+            }
         }
         autoKill();
     }
+
+    public void go(){
+        Command command = new MoveCommand(this.block, this);
+        command.execute();
+    }
+
+    public void go(Block block) {}
 
     public void setBlock(Block block) {
         this.block = block;

@@ -1,8 +1,8 @@
 package models;
 
 public class MonitorBlock extends Block{
-    public MonitorBlock(boolean cross, boolean entry, int direction) {
-        super(cross, entry, direction);
+    public MonitorBlock(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
+        super(cross, entry, exit, direction, line, column);
     }
 
     @Override
@@ -18,5 +18,10 @@ public class MonitorBlock extends Block{
     @Override
     public void lockBlock() {
 
+    }
+
+    @Override
+    public boolean tryLockBlock() {
+        return false;
     }
 }

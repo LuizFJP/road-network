@@ -3,17 +3,18 @@ import models.Block;
 import models.Car;
 import models.CreateMesh;
 
+import java.util.List;
 import java.util.Random;
 
 public class Spawner implements Runnable {
-    private Block[] blocks;
+    private List<Block> entries;
     private int limit;
     private Car[] cars;
 
-    private CreateMesh mesh;
+    private Block[][] mesh;
 
-    public Spawner(Block[] blocks, int limit, CreateMesh mesh) {
-        this.blocks = blocks;
+    public Spawner(List<Block> entries, int limit, Block[][] mesh) {
+        this.entries = entries;
         this.limit = limit;
         this.cars = new Car[limit];
         this.mesh = mesh;
@@ -22,17 +23,24 @@ public class Spawner implements Runnable {
     @Override
     public void run() {
         int counter = 0;
+        for (int i = 0; i < entries.size(); i++) {
+            System.out.println(entries.get(i).toString());
+        }
+        System.out.println();
         while(true) {
-            if (counter > blocks.length - 1) {
+            if (counter > entries.size() - 1) {
                 counter = 0;
             }
             if (cars.length <= limit) {
-                var block = blocks[counter];
+                var block = entries.get(counter);
                 var speed = Math.random();
                 var position = getPosition();
                 var car = new Car("", speed, block.getLine(), block.getColumn(), cars, position, mesh);
+                car.setBlock(block);
                 cars[position] = car; // ver o problema se ao spawnar vai entrar em um block ocupado
                 block.occupyCar(car);
+                car.start();
+                counter++;
             }
         }
     }
@@ -47,26 +55,4 @@ public class Spawner implements Runnable {
         }
         return 0;
     }
-/*
-* cross(block) {
-*   List<Block> path;
-*   path.add(block);
-*   var cb = block;
-*   while(cb.cross) {
-*       var block = nextBlock();
-*       var aux = cb;
-*       path.add(aux);
-*       cb = block;
-*   }
-*
-*   for(int i = 0; i < path.size(); i++) {
-*       if (path.get(i).occupied()) {
-*           i = 0;
-*           timeout;
-*        }
-*       path.get(i).occupyBlock(car);
-*   }
-*
-* */
-
 }

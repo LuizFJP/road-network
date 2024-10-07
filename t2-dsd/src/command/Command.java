@@ -1,100 +1,89 @@
 package command;
+
 import models.Block;
 import models.Car;
 import models.CreateMesh;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public abstract class Command {
     private Block block;
     private Block nextBlock;
     private Car car;
-    private CreateMesh mesh;
+    private Block[][] mesh;
 
-    public Command(Block block,CreateMesh mesh){
+    public Command(Block block, Car car) {
         this.block = block;
-        this.mesh = mesh;
-    }
-    /*
-    Pegar a direçao do block atual
-    adicionar na posicao do carro e bla bla
-    tentar da aquire no proximo block
-
-
-    {
-        1: blockUp
-        2:
-        3:
-        9:
+        this.car = car;
+        this.mesh = CreateMesh.getMesh();
     }
 
-    * */
-    public void execute(){
+    public void execute() {
         switch (block.getDirection()) {
             case 1 -> blockUp();
             case 2 -> blockRight();
             case 3 -> blockDown();
             case 4 -> blockLeft();
-            case 5 -> blockUp();
-            case 6 -> blockUp();
-            case 7 -> blockUp();
-            case 8 -> blockUp();
-            case 9 -> blockUp();
-            case 10 -> blockUp();
-            case 11 -> blockUp();
-            case 12 -> blockUp();
         }
     }
 
-    /**
-     * Busca o proximo block, da um acquire para ver se está liberado
-     * setta o carro no proximo block e o block no carro
-     * remove do anterior e release
-     */
+//    private void crossDownLeft() {
+//        blockLeft();
+//        blockDown();
+//    }
 
-    private void blockUp(){
+    private void blockUp() {
         try {
-            nextBlock = mesh.getUpBlock(block.getLine(), block.getColumn());
-            nextBlock.occupyCar(car);
-            car.setBlock(nextBlock);
-            block.releaseCar();
-            block.releaseBlock();
-        } catch (Exception e){
+            nextBlock = CreateMesh.getUpBlock(block.getLine(), block.getColumn());
+            if (nextBlock.isCross()) {
+                cross();
+            } else {
+                nextBlock.occupyCar(car);
+                car.setBlock(nextBlock);
+                block.releaseCar();
+                block.releaseBlock();
+            }
+
+        } catch (Exception e) {
             System.out.println("Robson explodiu tudo!" + e);
         }
     }
 
-    private void blockDown(){
+    private void blockDown() {
         try {
-            nextBlock = mesh.getDownBlock(block.getLine(), block.getColumn());
+            nextBlock = CreateMesh.getDownBlock(block.getLine(), block.getColumn());
             nextBlock.occupyCar(car);
             car.setBlock(nextBlock);
             block.releaseCar();
             block.releaseBlock();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Robson explodiu tudo!");
         }
     }
 
-    private void blockRight(){
+    private void blockRight() {
         try {
-            nextBlock = mesh.getRightBlock(block.getLine(), block.getColumn());
+            nextBlock = CreateMesh.getRightBlock(block.getLine(), block.getColumn());
             nextBlock.occupyCar(car);
             car.setBlock(nextBlock);
             block.releaseCar();
             block.releaseBlock();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Robson explodiu tudo!");
         }
 
     }
 
-    private void blockLeft(){
+    private void blockLeft() {
         try {
-            nextBlock = mesh.getLeftBlock(block.getLine(), block.getColumn());
+            nextBlock = CreateMesh.getLeftBlock(block.getLine(), block.getColumn());
             nextBlock.occupyCar(car);
             car.setBlock(nextBlock);
             block.releaseCar();
             block.releaseBlock();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Robson explodiu tudo!");
         }
     }
@@ -103,8 +92,101 @@ public abstract class Command {
         this.block = block;
     }
 
-public void bla() {
+    void cross() {
+        try {
+            List<Block> path = new ArrayList<>();
+            path.add(block);
+            var cb = block;
+            while (true) {
+                var block = nextCrossBlock(cb);
+                if (block == null) {
+                    break;
+                }
+                var aux = cb;
+                path.add(aux);
+                cb = block;
+            }
 
-}
+            while (true) {
+                do {
+                    for (int i = 0; i < path.size(); i++) {
+                        if (!path.get(i).tryLockBlock()) {
+                            for (int j = i; j >= 0; j--) {
+                                path.get(i).releaseBlock();
+                            }
+                            car.sleep(new Random().nextInt(700));
+                            break;
+                        }
+                    }
+                } while (cb.isCross());
+            }
 
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    private Block nextCrossBlock(Block block) {
+        switch (block.getDirection()) {
+            case 5 -> {
+                return crossUp(block);
+            }
+            case 6 -> {
+                return crossRight(block);
+            }
+            case 7 -> {
+                return crossDown(block);
+            }
+            case 8 -> {
+                return crossLeft(block);
+            }
+            case 9 -> {
+                return crossUpRight(block);
+            }
+            case 10 -> {
+                return crossUpLeft(block);
+            }
+            case 11 -> {
+                return crossRightDown(block);
+            }
+            case 12 -> {
+                return crossDownLeft(block);
+            }
+        }
+        return null;
+    }
+
+    private Block crossUp(Block block) {
+        return mesh[block.getLine() - 1][block.getColumn()];
+    }
+    private Block crossRight(Block block) {
+        return mesh[block.getLine()][block.getColumn() + 1];
+    }
+    private Block crossDown(Block block) {
+        return mesh[block.getLine() + 1][block.getColumn()];
+    }
+    private Block crossLeft(Block block) {
+        return mesh[block.getLine()][block.getColumn() - 1];
+    }
+    private Block crossUpRight(Block block) {
+        var value = new Random().nextInt(2);
+        return value == 0 ? mesh[block.getLine()][block.getColumn() - 1] :
+                mesh[block.getLine() + 1][block.getColumn()];
+    }
+    private Block crossDownLeft(Block block) {
+        var value = new Random().nextInt(2);
+        return value == 0 ? mesh[block.getLine() + 1][block.getColumn()] :
+                mesh[block.getLine()][block.getColumn() - 1];
+    }
+    private Block crossUpLeft(Block block) {
+        var value = new Random().nextInt(2);
+        return value == 0 ? mesh[block.getLine() - 1][block.getColumn()] :
+                mesh[block.getLine()][block.getColumn() - 1];
+    }
+    private Block crossRightDown(Block block) {
+        var value = new Random().nextInt(2);
+        return value == 0 ? mesh[block.getLine()][block.getColumn() + 1] :
+                mesh[block.getLine() + 1][block.getColumn()];
+    }
 }
