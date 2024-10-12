@@ -26,26 +26,14 @@ public abstract class Command {
             case 2 -> blockRight();
             case 3 -> blockDown();
             case 4 -> blockLeft();
+            default -> cross();
         }
     }
-
-//    private void crossDownLeft() {
-//        blockLeft();
-//        blockDown();
-//    }
 
     private void blockUp() {
         try {
             nextBlock = CreateMesh.getUpBlock(block.getLine(), block.getColumn());
-            if (nextBlock.isCross()) {
-                cross();
-            } else {
-                nextBlock.occupyCar(car);
-                car.setBlock(nextBlock);
-                block.releaseCar();
-                block.releaseBlock();
-            }
-
+            takeBlock();
         } catch (Exception e) {
             System.out.println("Robson explodiu tudo!" + e);
         }
@@ -54,22 +42,27 @@ public abstract class Command {
     private void blockDown() {
         try {
             nextBlock = CreateMesh.getDownBlock(block.getLine(), block.getColumn());
+            takeBlock();
+        } catch (Exception e) {
+            System.out.println("Robson explodiu tudo!");
+        }
+    }
+
+    private void takeBlock() {
+        if (nextBlock.isCross()) {
+            cross();
+        } else {
             nextBlock.occupyCar(car);
             car.setBlock(nextBlock);
             block.releaseCar();
             block.releaseBlock();
-        } catch (Exception e) {
-            System.out.println("Robson explodiu tudo!");
         }
     }
 
     private void blockRight() {
         try {
             nextBlock = CreateMesh.getRightBlock(block.getLine(), block.getColumn());
-            nextBlock.occupyCar(car);
-            car.setBlock(nextBlock);
-            block.releaseCar();
-            block.releaseBlock();
+            takeBlock();
         } catch (Exception e) {
             System.out.println("Robson explodiu tudo!");
         }
@@ -79,10 +72,7 @@ public abstract class Command {
     private void blockLeft() {
         try {
             nextBlock = CreateMesh.getLeftBlock(block.getLine(), block.getColumn());
-            nextBlock.occupyCar(car);
-            car.setBlock(nextBlock);
-            block.releaseCar();
-            block.releaseBlock();
+            takeBlock();
         } catch (Exception e) {
             System.out.println("Robson explodiu tudo!");
         }
