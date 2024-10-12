@@ -119,6 +119,18 @@ public abstract class Command {
 
     private Block nextCrossBlock(Block block) {
         switch (block.getDirection()) {
+            case 1 -> {
+                return crossUp(block);
+            }
+            case 2 -> {
+                return crossRight(block);
+            }
+            case 3 -> {
+                return crossDown(block);
+            }
+            case 4 -> {
+                return crossLeft(block);
+            }
             case 5 -> {
                 return crossUp(block);
             }
