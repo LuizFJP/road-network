@@ -1,13 +1,18 @@
 package models;
 
-public abstract class Block {
+import javax.swing.ImageIcon;
+import view.MeshView;
+
+  public abstract class Block {
     private boolean entry;
     private boolean exit;
     private boolean cross;
     private int direction;
     private int line;
     private int column;
+    private ImageIcon icon;
     protected Car car;
+    protected MeshView meshView;
     public Block(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
         this.cross = cross;
         this.entry = entry;
@@ -19,15 +24,14 @@ public abstract class Block {
 
     @Override
     public String toString() {
-        return "Entry: " + entry + ", Cross: " + cross  + ", Direction: " + direction;
+        return "line: "+line + " column: " + column + "Entry: " + entry + ", Cross: " + cross  + ", Direction: " + direction;
     }
 
-    public void occupyCar(Car car) {
-        this.car = car;
-    }
+    public abstract void occupyCar(Car car);
 
     public void releaseCar(){
         this.car = null;
+        meshView.updateCarIcon(this);
     }
 
     public abstract void releaseBlock();
@@ -84,5 +88,21 @@ public abstract class Block {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+    
+    public boolean hasCar() {
+        return !(car == null);
+    }
+    
+    public ImageIcon getIcon() {
+        return this.icon;
+    }
+    
+    public void setIcon(ImageIcon imageIcon) {
+        this.icon = imageIcon;
+    }
+    
+    public void setMeshView(MeshView meshView) {
+        this.meshView = meshView;
     }
 }

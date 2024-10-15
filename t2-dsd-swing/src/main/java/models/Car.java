@@ -2,9 +2,11 @@ package models;
 
 import command.Command;
 import command.MoveCommand;
+import javax.swing.ImageIcon;
+import models.Block;
 
 public class Car extends Thread {
-    String image;
+    ImageIcon image;
     double speed;
     Block block;
     int line;
@@ -15,7 +17,7 @@ public class Car extends Thread {
     Car[] cars;
     int quantityOfCars;
 
-    public Car(String image, double speed, int line, int column, Car[] cars, int position, Block[][] mesh, int quantityOfCars) {
+    public Car(ImageIcon image, double speed, int line, int column, Car[] cars, int position, Block[][] mesh, int quantityOfCars) {
         this.image = image;
         this.speed = speed;
         this.line = line;
@@ -56,5 +58,9 @@ public class Car extends Thread {
 
     public int getPosition() {
         return position;
+    }
+    
+    public ImageIcon getImage() {
+        return image;
     }
 }

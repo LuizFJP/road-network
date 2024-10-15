@@ -4,7 +4,6 @@
  */
 package view;
 
-import myDefault.Spawner;
 import factory.CreateMonitorBlock;
 import factory.CreateSemaphoreBlock;
 import factory.FactoryBlock;
@@ -24,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import models.Block;
 import models.CreateMesh;
+import myDefault.Spawner;
 
 /**
  *
