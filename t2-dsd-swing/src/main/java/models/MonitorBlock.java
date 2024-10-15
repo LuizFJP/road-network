@@ -7,7 +7,7 @@ public class MonitorBlock extends Block{
 
     @Override
     public synchronized void occupyCar(Car car) {
-        super.occupyCar(car);
+        
     }
 
     @Override

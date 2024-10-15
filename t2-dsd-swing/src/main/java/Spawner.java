@@ -2,6 +2,7 @@ import models.Block;
 import models.Car;
 
 import java.util.List;
+import javax.swing.ImageIcon;
 
 public class Spawner implements Runnable {
     private List<Block> entries;
@@ -33,7 +34,8 @@ public class Spawner implements Runnable {
                 var block = entries.get(counter);
                 var speed = Math.random();
                 var position = getPosition();
-                var car = new Car("", speed, block.getLine(), block.getColumn(), cars, position, mesh, quantityOfCars);
+                var icon = new ImageIcon(getClass().getClassLoader().getResource("robson2.png").getPath());
+                var car = new Car(icon, speed, block.getLine(), block.getColumn(), cars, position, mesh, quantityOfCars);
                 car.setBlock(block);
                 cars[position] = car;
                 quantityOfCars++;

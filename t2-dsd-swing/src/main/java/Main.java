@@ -28,7 +28,7 @@ public class Main {
         }
 
         var entries = CreateMesh.getEntries();
-        var spawner = new Spawner(entries, 100, mesh);
+        var spawner = new Spawner(entries, 20, mesh);
         var threadSpawner = new Thread(spawner);
         threadSpawner.start();
     }

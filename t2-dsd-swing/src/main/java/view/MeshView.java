@@ -7,6 +7,7 @@ package view;
 import models.Block;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -21,42 +22,60 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.Image;
+import observe.Screen;
 
 /**
  *
  * @author luizportela
  */
-public class MeshView extends JFrame {
+public class MeshView extends JFrame implements Screen {
+    private Block[][] matrix;
+    private JLabel[][] viewMatrix;
 
     // Constructor that accepts a Block[][] matrix
     public MeshView(Block[][] matrix) {
+        this.matrix = matrix;
         this.setTitle("Matrix Board with Labels");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1920, 1080);
 
         JPanel boardPanel = new JPanel(new GridLayout(matrix.length, matrix[0].length));
-
+        viewMatrix = new JLabel[matrix.length][matrix[0].length];
+        
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 var square = createBlock(matrix[i][j]);
                 boardPanel.add(square);
             }
         }
-
         this.add(boardPanel);
         this.setVisible(true);
     }
     
-    private JPanel createBlock(Block block) {
+    @Override
+    public void updateCarIcon(Block block){
+        JLabel jLabel = viewMatrix[block.getLine()][block.getColumn()];
+        if(block.hasCar()) {
+            jLabel.setIcon(block.getCar().getImage());
+        } else {
+            jLabel.setIcon(block.getIcon());
+        }
+    }
+
+    public JPanel createBlock(Block block) {
         JPanel square = new JPanel();
         square.setPreferredSize(new Dimension(50, 50));
         square.setLayout(new BorderLayout());
 
         ImageIcon image = getImageBlock(block);
+        block.setIcon(image);
+        block.setMeshView(this);
 
-        JLabel imageLabel = new JLabel(image);
+        JLabel imageLabel = new JLabel();
+        imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER); 
         imageLabel.setVerticalAlignment(SwingConstants.CENTER); 
+        this.viewMatrix[block.getLine()][block.getColumn()] = imageLabel;
         square.add(imageLabel, BorderLayout.CENTER);
         square.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 

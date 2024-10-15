@@ -12,8 +12,8 @@ public class SemaphoreBlock extends Block {
 
     @Override
     public void occupyCar(Car car) {
-        lockBlock();
-        super.occupyCar(car);
+        this.car = car;
+        meshView.updateCarIcon(this);
     }
 
     @Override
@@ -37,6 +37,12 @@ public class SemaphoreBlock extends Block {
 
     @Override
     public void releaseBlock() {
-        mutex.release();
+        try {
+         mutex.release();
+        Thread.sleep(new Random().nextInt(500));   
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 }

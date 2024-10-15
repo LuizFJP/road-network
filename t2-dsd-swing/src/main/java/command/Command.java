@@ -52,6 +52,7 @@ public abstract class Command {
         if (nextBlock.isCross()) {
             cross();
         } else {
+            nextBlock.lockBlock();
             nextBlock.occupyCar(car);
             car.setBlock(nextBlock);
             block.releaseCar();
