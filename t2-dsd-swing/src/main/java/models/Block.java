@@ -3,7 +3,7 @@ package models;
 import javax.swing.ImageIcon;
 import view.MeshView;
 
-public abstract class Block {
+  public abstract class Block {
     private boolean entry;
     private boolean exit;
     private boolean cross;
@@ -24,7 +24,7 @@ public abstract class Block {
 
     @Override
     public String toString() {
-        return "Entry: " + entry + ", Cross: " + cross  + ", Direction: " + direction;
+        return "line: "+line + " column: " + column + "Entry: " + entry + ", Cross: " + cross  + ", Direction: " + direction;
     }
 
     public abstract void occupyCar(Car car);
