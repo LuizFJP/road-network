@@ -1,4 +1,4 @@
-package br.udesc.t2.dsd.swing.models;;
+package models;
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;

@@ -1,8 +1,8 @@
 
 
-import br.udesc.t2.dsd.swing.factory.CreateSemaphoreBlock;
-import br.udesc.t2.dsd.swing.models.Block;
-import br.udesc.t2.dsd.swing.models.CreateMesh;
+import factory.CreateSemaphoreBlock;
+import models.Block;
+import models.CreateMesh;
 
 import java.io.IOException;
 import view.MeshView;

@@ -1,8 +1,8 @@
-package br.udesc.t2.dsd.swing.command;
+package command;
 
-import br.udesc.t2.dsd.swing.models.Block;
-import br.udesc.t2.dsd.swing.models.Car;
-import br.udesc.t2.dsd.swing.models.CreateMesh;
+import models.Block;
+import models.Car;
+import models.CreateMesh;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package br.udesc.t2.dsd.swing.command;
+package command;
 
 public class CrossroadCommand {
 

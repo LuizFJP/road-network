@@ -4,7 +4,7 @@
  */
 package view;
 
-import br.udesc.t2.dsd.swing.models.Block;
+import models.Block;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,7 +32,7 @@ public class MeshView extends JFrame {
     public MeshView(Block[][] matrix) {
         this.setTitle("Matrix Board with Labels");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(400, 400);
+        this.setSize(1920, 1080);
 
         JPanel boardPanel = new JPanel(new GridLayout(matrix.length, matrix[0].length));
 
@@ -46,7 +46,7 @@ public class MeshView extends JFrame {
         this.add(boardPanel);
         this.setVisible(true);
     }
-
+    
     private JPanel createBlock(Block block) {
         JPanel square = new JPanel();
         square.setPreferredSize(new Dimension(50, 50));
@@ -66,13 +66,13 @@ public class MeshView extends JFrame {
     private ImageIcon getImageBlock(Block block) {
         switch (block.getDirection()) {
             case 1:
-                return getImage("arrow-up.jpg"); // Replace with actual paths
+                return getImage("arrow-up.jpg");
             case 2:
-                return getImage("arrow-right.jpg"); // Replace with actual paths
+                return getImage("arrow-right.jpg");
             case 3:
-                return getImage("arrow-down.jpg"); // Replace with actual paths
+                return getImage("arrow-down.jpg");
             case 4:
-                return getImage("arrow-left.jpg"); // Replace with actual paths
+                return getImage("arrow-left.jpg");
             default:
                 return null; // No image for unknown directions
         }

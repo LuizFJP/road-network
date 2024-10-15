@@ -1,5 +1,5 @@
-import br.udesc.t2.dsd.swing.models.Block;
-import br.udesc.t2.dsd.swing.models.Car;
+import models.Block;
+import models.Car;
 
 import java.util.List;
 

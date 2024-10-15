@@ -1,7 +1,7 @@
-package br.udesc.t2.dsd.swing.factory;
+package factory;
 
-import br.udesc.t2.dsd.swing.models.Block;
-import br.udesc.t2.dsd.swing.models.MonitorBlock;
+import models.Block;
+import models.MonitorBlock;
 
 public class CreateMonitorBlock implements FactoryBlock {
     public Block create(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
