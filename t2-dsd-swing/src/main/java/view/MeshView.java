@@ -4,7 +4,7 @@
  */
 package view;
 
-import br.udesc.t2.dsd.swing.models.Block;
+import models.Block;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -59,6 +59,7 @@ public class MeshView extends JFrame {
         imageLabel.setVerticalAlignment(SwingConstants.CENTER); 
         square.add(imageLabel, BorderLayout.CENTER);
         square.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
 
         return square;
     }
@@ -77,6 +78,8 @@ public class MeshView extends JFrame {
                 return null; // No image for unknown directions
         }
     }
+    
+    
 
     private ImageIcon getImage(String imagePath) {
         BufferedImage backgroundImage;

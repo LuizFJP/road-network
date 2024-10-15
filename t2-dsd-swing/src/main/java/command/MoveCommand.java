@@ -1,7 +1,7 @@
-package br.udesc.t2.dsd.swing.command;
+package command;
 
-import br.udesc.t2.dsd.swing.models.Block;
-import br.udesc.t2.dsd.swing.models.Car;
+import models.Block;
+import models.Car;
 
 public class MoveCommand extends Command{
     public MoveCommand(Block block, Car car) {

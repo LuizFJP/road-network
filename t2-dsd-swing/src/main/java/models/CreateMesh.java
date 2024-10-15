@@ -1,6 +1,6 @@
-package br.udesc.t2.dsd.swing.models;
+package models;
 
-import br.udesc.t2.dsd.swing.factory.FactoryBlock;
+import factory.FactoryBlock;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

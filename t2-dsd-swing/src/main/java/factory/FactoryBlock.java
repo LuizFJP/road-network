@@ -1,6 +1,6 @@
-package br.udesc.t2.dsd.swing.factory;
+package factory;
 
-import br.udesc.t2.dsd.swing.models.Block;
+import models.Block;
 
 public interface FactoryBlock {
     Block create(boolean cross, boolean entry, boolean exit, int direction, int line, int column);

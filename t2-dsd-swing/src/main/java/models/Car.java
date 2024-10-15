@@ -1,7 +1,7 @@
-package br.udesc.t2.dsd.swing.models;
+package models;
 
-import br.udesc.t2.dsd.swing.command.Command;
-import br.udesc.t2.dsd.swing.command.MoveCommand;
+import command.Command;
+import command.MoveCommand;
 
 public class Car extends Thread {
     String image;

@@ -1,4 +1,4 @@
-package br.udesc.t2.dsd.swing.models;
+package models;
 
 public class MonitorBlock extends Block{
     public MonitorBlock(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {

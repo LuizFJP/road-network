@@ -1,8 +1,8 @@
-package br.udesc.t2.dsd.swing.command;
+package command;
 
-import br.udesc.t2.dsd.swing.models.Block;
-import br.udesc.t2.dsd.swing.models.Car;
-import br.udesc.t2.dsd.swing.models.CreateMesh;
+import models.Block;
+import models.Car;
+import models.CreateMesh;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,7 @@ public abstract class Command {
 
             while (true) {
                 do {
-                    for (int i = 0; i < path.size(); i++) {
+                    for (int i = 1; i < path.size(); i++) {
                         if (!path.get(i).tryLockBlock()) {
                             for (int j = i; j >= 0; j--) {
                                 path.get(i).releaseBlock();

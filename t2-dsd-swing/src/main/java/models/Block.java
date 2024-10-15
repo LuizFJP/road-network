@@ -1,4 +1,4 @@
-package br.udesc.t2.dsd.swing.models;
+package models;
 
 public abstract class Block {
     private boolean entry;
