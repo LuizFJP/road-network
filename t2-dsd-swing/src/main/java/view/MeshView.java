@@ -101,14 +101,18 @@ public class MeshView extends JFrame implements Screen {
     
 
     private ImageIcon getImage(String imagePath) {
-        BufferedImage backgroundImage;
-        try {
-            BufferedImage image = ImageIO.read(new File(getClass().getClassLoader().getResource(imagePath).getPath()));
-            return new ImageIcon(image.getScaledInstance(30, 30, Image.SCALE_SMOOTH));
-        } catch (IOException e) {
-            e.printStackTrace();
+    try {
+        var resource = getClass().getClassLoader().getResource(imagePath);
+        if (resource == null) {
+            throw new IOException("Arquivo não encontrado: " + imagePath);
         }
-        return null;
+        BufferedImage image = ImageIO.read(resource);
+        return new ImageIcon(image.getScaledInstance(30, 30, Image.SCALE_SMOOTH));
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+    return null;
+}
+
 
 }
