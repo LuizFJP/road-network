@@ -2,12 +2,16 @@ package models;
 
 import command.Command;
 import command.MoveCommand;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import models.Block;
+import myDefault.Spawner;
 
 public class Car extends Thread {
+
     ImageIcon image;
-    double speed;
+    int speed;
     Block block;
     int line;
     int column;
@@ -15,9 +19,9 @@ public class Car extends Thread {
     Block[][] mesh;
     boolean stop;
     Car[] cars;
-    int quantityOfCars;
+    Spawner spawner;
 
-    public Car(ImageIcon image, double speed, int line, int column, Car[] cars, int position, Block[][] mesh, int quantityOfCars) {
+    public Car(ImageIcon image, int speed, int line, int column, Car[] cars, int position, Block[][] mesh, Spawner spawner) {
         this.image = image;
         this.speed = speed;
         this.line = line;
@@ -25,14 +29,20 @@ public class Car extends Thread {
         this.cars = cars;
         this.position = position;
         this.mesh = mesh;
-        this.quantityOfCars = quantityOfCars;
+        this.spawner = spawner;
+    }
+
+    public void autoPurge() {
+        autoKill();
+        this.interrupt();
     }
 
     public synchronized void autoKill() {
-        this.quantityOfCars--;
         this.block.releaseCar();
         this.block.releaseBlock();
         cars[position] = null;
+        spawner.tryLockQuantityOfCars();
+        spawner.releaseQuantityOfCars();
     }
 
     @Override
@@ -59,8 +69,12 @@ public class Car extends Thread {
     public int getPosition() {
         return position;
     }
-    
+
     public ImageIcon getImage() {
         return image;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }

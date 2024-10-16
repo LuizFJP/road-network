@@ -97,7 +97,7 @@ public class MeshView extends JFrame implements Screen {
                 return null; // No image for unknown directions
         }
     }
-    
+    ;
     
 
     private ImageIcon getImage(String imagePath) {

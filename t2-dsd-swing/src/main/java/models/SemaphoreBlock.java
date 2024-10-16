@@ -6,7 +6,9 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 public class SemaphoreBlock extends Block {
+
     private Semaphore mutex = new Semaphore(1);
+
     public SemaphoreBlock(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
         super(cross, entry, exit, direction, line, column);
     }
@@ -39,11 +41,10 @@ public class SemaphoreBlock extends Block {
     @Override
     public void releaseBlock() {
         try {
-         mutex.release();
-        Thread.sleep(new Random().nextInt(500));   
-        } catch(Exception e) {
+            mutex.release();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 }

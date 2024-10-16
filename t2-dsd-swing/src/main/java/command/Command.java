@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class Command {
+
     private Block block;
     private Block nextBlock;
     private Car car;
@@ -22,11 +23,16 @@ public abstract class Command {
 
     public void execute() {
         switch (block.getDirection()) {
-            case 1 -> blockUp();
-            case 2 -> blockRight();
-            case 3 -> blockDown();
-            case 4 -> blockLeft();
-            default -> cross();
+            case 1 ->
+                blockUp();
+            case 2 ->
+                blockRight();
+            case 3 ->
+                blockDown();
+            case 4 ->
+                blockLeft();
+            default ->
+                cross(); 
         }
     }
 
@@ -39,7 +45,7 @@ public abstract class Command {
         }
     }
 
-    private void blockDown() {
+    private void blockDown() { // 🤬
         try {
             nextBlock = CreateMesh.getDownBlock(block.getLine(), block.getColumn());
             takeBlock();
@@ -52,11 +58,17 @@ public abstract class Command {
         if (nextBlock.isCross()) {
             cross();
         } else {
-            nextBlock.lockBlock();
+            try { 
+                nextBlock.lockBlock();
             nextBlock.occupyCar(car);
             car.setBlock(nextBlock);
             block.releaseCar();
             block.releaseBlock();
+            Thread.sleep(car.getSpeed());
+            } catch(Exception e) {
+                System.out.println("Robson explodiu tudo de novo! " + e);
+            }
+            
         }
     }
 
@@ -90,16 +102,17 @@ public abstract class Command {
             while (true) {
                 var block = nextCrossBlock(cb);
                 if (block == null || !block.isCross()) {
+                    cb = block;
+                    path.add(cb);
                     break;
                 }
-                var aux = cb;
-                path.add(aux);
                 cb = block;
+                path.add(cb);
             }
 
-            while (true) {
-                do {
-                    for (int i = 1; i < path.size(); i++) {
+            do {
+
+                    for (int i = 0; i < path.size(); i++) {
                         if (!path.get(i).tryLockBlock()) {
                             for (int j = i; j >= 0; j--) {
                                 path.get(i).releaseBlock();
@@ -107,11 +120,21 @@ public abstract class Command {
                             car.sleep(new Random().nextInt(700));
                             break;
                         }
-                        System.out.println("nº carro: " + car + " line: " + block.getLine() + " column: " + block.getColumn() + block);
                     }
-                } while (cb.isCross());
-            }
+                for (int i = 0; i < path.size(); i++) {
+                    path.get(i).occupyCar(car);
+                    car.setBlock(path.get(i));
+                    block.releaseCar();
+                    block.releaseBlock();
+                    Thread.sleep(car.getSpeed());
+                    block = path.get(i);
+                    cb = path.get(i);
+                    if(!path.get(i).isCross()) {
+                        break;
+                    }
+                }
 
+            } while (cb.isCross());
 
         } catch (Exception e) {
 
@@ -151,33 +174,40 @@ public abstract class Command {
     private Block crossUp(Block block) {
         return mesh[block.getLine() - 1][block.getColumn()];
     }
+
     private Block crossRight(Block block) {
         return mesh[block.getLine()][block.getColumn() + 1];
     }
+
     private Block crossDown(Block block) {
         return mesh[block.getLine() + 1][block.getColumn()];
     }
+
     private Block crossLeft(Block block) {
         return mesh[block.getLine()][block.getColumn() - 1];
     }
+
     private Block crossUpRight(Block block) {
         var value = new Random().nextInt(2);
-        return value == 0 ? mesh[block.getLine()][block.getColumn() - 1] :
-                mesh[block.getLine() + 1][block.getColumn()];
+        return value == 0 ? mesh[block.getLine()][block.getColumn() + 1]
+                : mesh[block.getLine() - 1][block.getColumn()];
     }
+
     private Block crossDownLeft(Block block) {
         var value = new Random().nextInt(2);
-        return value == 0 ? mesh[block.getLine() + 1][block.getColumn()] :
-                mesh[block.getLine()][block.getColumn() - 1];
+        return value == 0 ? mesh[block.getLine() + 1][block.getColumn()]
+                : mesh[block.getLine()][block.getColumn() - 1];
     }
+
     private Block crossUpLeft(Block block) {
         var value = new Random().nextInt(2);
-        return value == 0 ? mesh[block.getLine() - 1][block.getColumn()] :
-                mesh[block.getLine()][block.getColumn() - 1];
+        return value == 0 ? mesh[block.getLine() - 1][block.getColumn()]
+                : mesh[block.getLine()][block.getColumn() - 1];
     }
+
     private Block crossRightDown(Block block) {
         var value = new Random().nextInt(2);
-        return value == 0 ? mesh[block.getLine()][block.getColumn() + 1] :
-                mesh[block.getLine() + 1][block.getColumn()];
+        return value == 0 ? mesh[block.getLine()][block.getColumn() + 1]
+                : mesh[block.getLine() + 1][block.getColumn()];
     }
 }
