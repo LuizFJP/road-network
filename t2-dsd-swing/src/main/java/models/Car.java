@@ -17,7 +17,6 @@ public class Car extends Thread {
     int column;
     int position;
     Block[][] mesh;
-    boolean stop;
     Car[] cars;
     Spawner spawner;
 
@@ -47,13 +46,13 @@ public class Car extends Thread {
 
     @Override
     public void run() {
-        stop = false;
-        while (!stop) {
-            go();
+        do {
             if (block.isExit()) {
-                stop = true;
+                break;
             }
-        }
+            go();
+        } while (!Thread.currentThread().isInterrupted());
+            
         autoKill();
     }
 

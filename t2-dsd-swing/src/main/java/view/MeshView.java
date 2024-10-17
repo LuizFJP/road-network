@@ -28,16 +28,14 @@ import observe.Screen;
  *
  * @author luizportela
  */
-public class MeshView extends JFrame implements Screen {
+public class MeshView extends JPanel implements Screen {
     private Block[][] matrix;
     private JLabel[][] viewMatrix;
 
-    // Constructor that accepts a Block[][] matrix
     public MeshView(Block[][] matrix) {
         this.matrix = matrix;
-        this.setTitle("Matrix Board with Labels");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1920, 1080);
+        setLayout(new BorderLayout());
+        this.setVisible(true);
 
         JPanel boardPanel = new JPanel(new GridLayout(matrix.length, matrix[0].length));
         viewMatrix = new JLabel[matrix.length][matrix[0].length];
@@ -93,8 +91,10 @@ public class MeshView extends JFrame implements Screen {
                 return getImage("arrow-down.jpg");
             case 4:
                 return getImage("arrow-left.jpg");
+            case 0:
+                return null;
             default:
-                return null; // No image for unknown directions
+                return getImage("cross.png");
         }
     }
     ;

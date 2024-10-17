@@ -125,7 +125,11 @@ public class MainView extends JFrame {
                 Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            new MeshView(mesh);
+            MeshView meshView = new MeshView(mesh);
+            this.add(meshView, BorderLayout.CENTER);
+            this.revalidate();
+            this.repaint();
+            
             limitCars = Integer.parseInt(jtCar.getText());
             interval = Integer.parseInt(jtInterval.getText());
             var entries = CreateMesh.getEntries();

@@ -65,8 +65,11 @@ public abstract class Command {
             block.releaseCar();
             block.releaseBlock();
             Thread.sleep(car.getSpeed());
-            } catch(Exception e) {
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }catch (Exception e) {
                 System.out.println("Robson explodiu tudo de novo! " + e);
+                Thread.currentThread().interrupt();
             }
             
         }

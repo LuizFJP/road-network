@@ -23,6 +23,8 @@ public class SemaphoreBlock extends Block {
     public void lockBlock() {
         try {
             mutex.acquire();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,6 +34,9 @@ public class SemaphoreBlock extends Block {
         var random = new Random();
         try {
             return mutex.tryAcquire(random.nextInt(700), TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return false;
         } catch (Exception e) {
             System.out.println("Robson estragou tudo de novo " + e);
             return false;
