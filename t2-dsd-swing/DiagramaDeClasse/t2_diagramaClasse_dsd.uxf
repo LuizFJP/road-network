@@ -1,0 +1,141 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>1090</x><y>200</y><w>200</w><h>250</h></coordinates><panel_attributes>RobsonCar
+--
+- image
+- speed
+- line
+- column
+- position
+- mesh
+- cars
+- spawner
+--
++ RobsonCar(ImageIcon image, int speed, int line, int column, RobsonCar[] cars, int position, RobsonBlock[][] mesh, RobsonSpawner spawner): RobsonCar
++ run()
++robsonGo()
++robsonAutoKill()
++robsonAutoPurge()
++ getters e setters</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>840</y><w>230</w><h>110</h></coordinates><panel_attributes>RobsonMonitorBlock
+--
++ RobsonMonitorBlock(): RobsonMonitorBlock
++ robsonLockBlock():void
++ robsonTryLockBlock():void
++ robsonReleaseBlock():void
++ robsonReleaseCar():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>170</x><y>530</y><w>240</w><h>350</h></coordinates><panel_attributes>RobsonCommand
+--
+- block: RobsonBlock
+- nextBlock: RobsonBlock
+- car: RobsonCar
+- mesh: RobsonBlock[][]
+--
++ RobsonCommand(RobsonBlock block, RobsonCar car)
++ robsonExecute(): void
++ robsonBlockUp(): void
++ robsonBlockRight(): void
++ robsonBlockDown(): void
++ robsonBlockLeft(): void
++ robsonCross(): void
++ robsonTakeBlock(): void
++ robsonNextCrossBlock(): void
++ robsonCrossUp(block): void
++ robsonCrossRight(block): void
++ robsonCrossDown(block): void
++ robsonCrossLeft(block): void
++ robsonCrossUpRight(block): void
++ robsonCrossUpLeft(block): void
++ robsonCrossRightDown(block): void
++ robsonCrossDownLeft(block): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>970</x><y>530</y><w>220</w><h>280</h></coordinates><panel_attributes>RobsonBlock
+--
+- entry: boolean
+- exit: boolean
+- cross: boolean
+- direction: int
+- line: int
+- column: int
+- icon: ImageIcon
+- car: RobsonCar
+- meshView: RobsonMeshView
+--
++ RobsonBlock():RobsonBlock
++ robsonLockBlock():void
++ robsonTryLockBlock():void
++ robsonReleaseBlock():void
++ robsonReleaseCar():void
++ getters e setters
++ toString():String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>640</y><w>210</w><h>70</h></coordinates><panel_attributes>RobsonFactoryBlock
+--
+
+--
++ create(boolean cross, boolean entry, boolean exit, int direction, int line, int column): RobsonBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1130</x><y>840</y><w>210</w><h>110</h></coordinates><panel_attributes>RobsonSemaphoreBlock
+--
++ RobsonSemaphoreBlock(): RobsonSemaphoreBlock
++ robsonLockBlock():void
++ robsonTryLockBlock():void
++ robsonReleaseBlock():void
++ robsonReleaseCar():void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>420</x><y>0</y><w>350</w><h>200</h></coordinates><panel_attributes>RobsonCreateMesh
+--
+- mesh: RobsonBlock[][]
+- entries: List&lt;RobsonBlock&gt;
+--
++ robsonGenerateRoads(String caminhoArquivo, RobsonFactoryBlock factoryBlock): RobsonBlock[][]
++ robsonCheckEntry(): boolean
++ robsonCheckExit(): boolean
++ robsonGetRightBlock(int line, int column): RobsonBlock
++ robsonGetLeftBlock(int line, int column): RobsonBlock
++ robsonGetUpBlock(int line, int column): RobsonBlock
++ robsonGetDownBlock(int line, int column): RobsonBlock
++ robsonGetMesh(): RobsonBlock[][]
++ robsonGetEntries(): List&lt;RobsonBlock&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>270</y><w>230</w><h>200</h></coordinates><panel_attributes>RobsonMainView
+--
+- limitCars: int
+- interval: int
+- factoryBlock: RobsonFactoryBlock
+- mesh: RobsonBlock[][]
+- spawner: RobsonSpawner
+--
++ RobsonMainView()
++ robsonBuildSettings(): void
++ robsonLoadActions(): void
++ robsonLoadMeshFiles(): void
++ robsonLoadSemaMonitor(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>250</y><w>330</w><h>150</h></coordinates><panel_attributes>RobsonMeshView
+--
+- matrix: RobsonBlock[][]
+--
++ RobsonMeshView(RobsonBlock[][] matrix)
++ robsonUpdateCarIcon(RobsonBlock block): void
++ robsonCreateBlock(RobsonBlock block): JPanel
++ robsonGetImageBlock(RobsonBlock block): ImageIcon
++ robosnGetImage(String imagePath):ImageIcon</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>920</y><w>260</w><h>80</h></coordinates><panel_attributes>RobsonMoveCommand
+--
+
+--
++ RobsonMoveCommand(RobsonBlock block, RobsonCar car)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>250</x><y>870</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>470</x><y>770</y><w>180</w><h>100</h></coordinates><panel_attributes>RobsonCreateMonitorBlock
+--
+
+--
++ create(boolean cross, boolean entry, boolean exit, int direction, int line, int column): RobsonCreateMonitorBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>670</x><y>770</y><w>190</w><h>100</h></coordinates><panel_attributes>RobsonCreateSemaphoreBlock
+--
+
+--
++ create(boolean cross, boolean entry, boolean exit, int direction, int line, int column): RobsonCreateSemaphoreBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>700</y><w>120</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>700</y><w>90</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;70;70</additional_attributes></element><element><id>Relation</id><coordinates><x>930</x><y>800</y><w>130</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>110;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>1090</x><y>800</y><w>110</w><h>60</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;90;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>790</x><y>10</y><w>220</w><h>290</h></coordinates><panel_attributes>RobsonSpawner
+--
+- entries: List&lt;RobsonBlock&gt;
+- limit: Integer
+- cars: RobsonCar[]
+- quantityOfCars: Integer
+- mesh: RobsonBlock[][]
+- mutex: Semaphore
+- tearDown: boolean
+- pause: boolean
+- insertionInterval: int
+--
++ RobsonSpawner(List&lt;RobsonBlock&gt; entries, int limit, RobsonBlock[][] mesh, int insertionInterval): RobsonSpawner
++ run(): void
++ robsonPickCarImage(): ImageIcon
++ robsonGetPosition():int
++ robsonTryLockQuantityOfCars(): void
++ releaseQuantityOfCars(): void
++ robsonPause(): void
++ robsonTearDown(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1350</x><y>400</y><w>140</w><h>50</h></coordinates><panel_attributes>Main
+--
++ main()
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

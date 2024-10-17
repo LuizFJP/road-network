@@ -27,7 +27,7 @@ import view.RobsonMeshView;
         return "line: "+line + " column: " + column + "Entry: " + entry + ", Cross: " + cross  + ", Direction: " + direction;
     }
 
-    public abstract void robsonOccupyCar(RobsonCar car);
+    public abstract void RobsonSemaphoreBlock(RobsonCar car);
 
     public void robsonReleaseCar(){
         this.car = null;
