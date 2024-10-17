@@ -1,6 +1,6 @@
 package command;
 
-public class CrossroadCommand {
+public class RobsonCrossroadCommand {
 
 
     /**

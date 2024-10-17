@@ -4,12 +4,12 @@
  */
 package observe;
 
-import models.Block;
+import models.RobsonBlock;
 
 /**
  *
  * @author luizportela
  */
-public interface Screen {
-    void updateCarIcon(Block block);
+public interface RobsonScreen {
+    void robsonUpdateCarIcon(RobsonBlock block);
 }

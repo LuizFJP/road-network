@@ -1,7 +1,7 @@
 package myDefault;
 
-import models.Block;
-import models.Car;
+import models.RobsonBlock;
+import models.RobsonCar;
 
 import java.util.List;
 import java.util.Random;
@@ -9,22 +9,22 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 
-public class Spawner implements Runnable {
+public class RobsonSpawner implements Runnable {
 
-    private List<Block> entries;
+    private List<RobsonBlock> entries;
     private Integer limit;
-    private Car[] cars;
+    private RobsonCar[] cars;
     private Integer quantityOfCars;
-    private Block[][] mesh;
+    private RobsonBlock[][] mesh;
     private Semaphore mutex = new Semaphore(1);
     private boolean tearDown;
     private boolean pause;
     private int insertionInterval;
 
-    public Spawner(List<Block> entries, int limit, Block[][] mesh, int insertionInterval) {
+    public RobsonSpawner(List<RobsonBlock> entries, int limit, RobsonBlock[][] mesh, int insertionInterval) {
         this.entries = entries;
         this.limit = limit;
-        this.cars = new Car[limit];
+        this.cars = new RobsonCar[limit];
         this.mesh = mesh;
         quantityOfCars = 0;
         this.tearDown = false;
@@ -48,13 +48,13 @@ public class Spawner implements Runnable {
                 if (quantityOfCars < limit && !pause) {
                     var block = entries.get(counter);
                     var speed = new Random().nextInt(1000);
-                    var position = getPosition();
-                    var icon = pickCarImage();
+                    var position = robsonGetPosition();
+                    var icon = robsonPickCarImage();
                     quantityOfCars++;
-                    var car = new Car(icon, speed, block.getLine(), block.getColumn(), cars, position, mesh, this);
-                    car.setBlock(block);
+                    var car = new RobsonCar(icon, speed, block.robsonGetLine(), block.robsonGetColumn(), cars, position, mesh, this);
+                    car.robsonSetBlock(block);
                     cars[position] = car;
-                    block.occupyCar(car);
+                    block.robsonOccupyCar(car);
                     car.start();
                     counter++;
                 }
@@ -64,14 +64,14 @@ public class Spawner implements Runnable {
         }
     }
     
-    private ImageIcon pickCarImage() {
+    private ImageIcon robsonPickCarImage() {
     String[] images = {"fernandinho.png", "robson2.png", "feio1.png", "feio2.png", "feio3.png"};
     int rnd = new Random().nextInt(images.length);
     return new ImageIcon(getClass().getClassLoader().getResource(images[rnd]).getPath());
 
     }
 
-    private int getPosition() {
+    private int robsonGetPosition() {
         for (int i = 0; i < cars.length; i++) {
             if (cars[i] == null) {
                 return i;
@@ -80,7 +80,7 @@ public class Spawner implements Runnable {
         return 0;
     }
 
-    public void tryLockQuantityOfCars() {
+    public void robsonTryLockQuantityOfCars() {
         try {
             mutex.acquire();
             quantityOfCars--;
@@ -100,15 +100,15 @@ public class Spawner implements Runnable {
         }
     }
 
-    public void pause() {
+    public void robsonPause() {
         pause = !pause;
     }
 
-    public void tearDown() {
+    public void robsonTearDown() {
         this.tearDown = true;
         for (int i = 0; i < mesh.length; i++) {
             for (int j = 0; j < mesh[i].length; j++) {
-                mesh[i][j].setExit(true);
+                mesh[i][j].robsonSetExit(true);
                 }
             }
         }

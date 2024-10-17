@@ -4,7 +4,7 @@
  */
 package view;
 
-import models.Block;
+import models.RobsonBlock;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -22,17 +22,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.Image;
-import observe.Screen;
+import observe.RobsonScreen;
 
 /**
  *
  * @author luizportela
  */
-public class MeshView extends JPanel implements Screen {
-    private Block[][] matrix;
+public class RobsonMeshView extends JPanel implements RobsonScreen {
+    private RobsonBlock[][] matrix;
     private JLabel[][] viewMatrix;
 
-    public MeshView(Block[][] matrix) {
+    public RobsonMeshView(RobsonBlock[][] matrix) {
         this.matrix = matrix;
         setLayout(new BorderLayout());
         this.setVisible(true);
@@ -42,7 +42,7 @@ public class MeshView extends JPanel implements Screen {
         
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                var square = createBlock(matrix[i][j]);
+                var square = robsonCreateBlock(matrix[i][j]);
                 boardPanel.add(square);
             }
         }
@@ -51,29 +51,29 @@ public class MeshView extends JPanel implements Screen {
     }
     
     @Override
-    public void updateCarIcon(Block block){
-        JLabel jLabel = viewMatrix[block.getLine()][block.getColumn()];
-        if(block.hasCar()) {
-            jLabel.setIcon(block.getCar().getImage());
+    public void robsonUpdateCarIcon(RobsonBlock block){
+        JLabel jLabel = viewMatrix[block.robsonGetLine()][block.robsonGetColumn()];
+        if(block.robsonHasCar()) {
+            jLabel.setIcon(block.robsonGetCar().robsonGetImage());
         } else {
-            jLabel.setIcon(block.getIcon());
+            jLabel.setIcon(block.robsonGetIcon());
         }
     }
 
-    public JPanel createBlock(Block block) {
+    public JPanel robsonCreateBlock(RobsonBlock block) {
         JPanel square = new JPanel();
         square.setPreferredSize(new Dimension(50, 50));
         square.setLayout(new BorderLayout());
 
-        ImageIcon image = getImageBlock(block);
-        block.setIcon(image);
-        block.setMeshView(this);
+        ImageIcon image = robsonGetImageBlock(block);
+        block.robsonSetIcon(image);
+        block.robsonSetMeshView(this);
 
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(image);
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER); 
         imageLabel.setVerticalAlignment(SwingConstants.CENTER); 
-        this.viewMatrix[block.getLine()][block.getColumn()] = imageLabel;
+        this.viewMatrix[block.robsonGetLine()][block.robsonGetColumn()] = imageLabel;
         square.add(imageLabel, BorderLayout.CENTER);
         square.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
@@ -81,26 +81,26 @@ public class MeshView extends JPanel implements Screen {
         return square;
     }
 
-    private ImageIcon getImageBlock(Block block) {
-        switch (block.getDirection()) {
+    private ImageIcon robsonGetImageBlock(RobsonBlock block) {
+        switch (block.robsonGetDirection()) {
             case 1:
-                return getImage("arrow-up.jpg");
+                return robosnGetImage("arrow-up.jpg");
             case 2:
-                return getImage("arrow-right.jpg");
+                return robosnGetImage("arrow-right.jpg");
             case 3:
-                return getImage("arrow-down.jpg");
+                return robosnGetImage("arrow-down.jpg");
             case 4:
-                return getImage("arrow-left.jpg");
+                return robosnGetImage("arrow-left.jpg");
             case 0:
                 return null;
             default:
-                return getImage("cross.png");
+                return robosnGetImage("cross.png");
         }
     }
     ;
     
 
-    private ImageIcon getImage(String imagePath) {
+    private ImageIcon robosnGetImage(String imagePath) {
     try {
         var resource = getClass().getClassLoader().getResource(imagePath);
         if (resource == null) {

@@ -5,22 +5,22 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-public class SemaphoreBlock extends Block {
+public class RobsonSemaphoreBlock extends RobsonBlock {
 
     private Semaphore mutex = new Semaphore(1);
 
-    public SemaphoreBlock(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
+    public RobsonSemaphoreBlock(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
         super(cross, entry, exit, direction, line, column);
     }
 
     @Override
-    public void occupyCar(Car car) {
+    public void robsonOccupyCar(RobsonCar car) {
         this.car = car;
-        meshView.updateCarIcon(this);
+        meshView.robsonUpdateCarIcon(this);
     }
 
     @Override
-    public void lockBlock() {
+    public void robsonLockBlock() {
         try {
             mutex.acquire();
         } catch (InterruptedException e) {
@@ -30,7 +30,7 @@ public class SemaphoreBlock extends Block {
         }
     }
 
-    public boolean tryLockBlock() {
+    public boolean robsonTryLockBlock() {
         var random = new Random();
         try {
             return mutex.tryAcquire(random.nextInt(700), TimeUnit.MILLISECONDS);
@@ -44,7 +44,7 @@ public class SemaphoreBlock extends Block {
     }
 
     @Override
-    public void releaseBlock() {
+    public void robsonReleaseBlock() {
         try {
             mutex.release();
         } catch (Exception e) {

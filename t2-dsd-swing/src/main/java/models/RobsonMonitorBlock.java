@@ -2,28 +2,28 @@ package models;
 
 import java.util.Random;
 
-public class MonitorBlock extends Block{
+public class RobsonMonitorBlock extends RobsonBlock{
     
     private boolean locked = false;
     
-    public MonitorBlock(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
+    public RobsonMonitorBlock(boolean cross, boolean entry, boolean exit, int direction, int line, int column) {
         super(cross, entry, exit, direction, line, column);
     }
 
     @Override
-    public synchronized void occupyCar(Car car) {
+    public synchronized void robsonOccupyCar(RobsonCar car) {
         this.car = car;
-        meshView.updateCarIcon(this);
+        meshView.robsonUpdateCarIcon(this);
     }
 
     @Override
-    public synchronized void releaseBlock() {
+    public synchronized void robsonReleaseBlock() {
         locked = false;  
         notify();
     }
 
     @Override
-    public synchronized void lockBlock() {
+    public synchronized void robsonLockBlock() {
         while (locked) {
             try {
                 wait(); 
@@ -35,7 +35,7 @@ public class MonitorBlock extends Block{
     }
 
     @Override
-    public synchronized boolean tryLockBlock() {
+    public synchronized boolean robsonTryLockBlock() {
         var random = new Random();
         try {
             
