@@ -59,7 +59,7 @@ public abstract class Command {
             cross();
         } else {
             try { 
-                nextBlock.lockBlock();
+            nextBlock.lockBlock();
             nextBlock.occupyCar(car);
             car.setBlock(nextBlock);
             block.releaseCar();
